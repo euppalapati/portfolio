@@ -1,3 +1,8 @@
+html {
+  --color-accent: oklch(53.53% 0.1184 283.63);
+  accent-color: var(--color-accent);
+}
+
 body {
     font: 100%/1.5 system-ui;
     max-width: 100ch;
@@ -22,4 +27,9 @@ nav a.current {
   border-bottom: 0.4em solid oklch(80% 3% 200);
   padding-bottom: 0.1em;
   font-weight: bold;
+}
+
+nav a:hover {
+  border-bottom: 0.4em solid var(--color-accent);
+  background-color: oklch(from var(--color-accent) 95% 5% h);
 }
