@@ -45,8 +45,6 @@ form {
   display: grid;
   grid-template-columns: auto 1fr;
   gap: 1em;
-  max-width: 500px;
-  margin: 0 auto;
 }
 
 form label {
