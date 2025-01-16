@@ -34,3 +34,9 @@ nav a:hover {
   border-bottom: 0.4em solid var(--color-accent);
   background-color: var(--color-accent-hover);
 }
+
+input,
+textarea,
+button {
+    font: inherit;
+}
