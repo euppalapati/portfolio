@@ -1,6 +1,6 @@
 html {
   --color-accent: oklch(53.53% 0.1184 283.63);
-  --color-accent-hover: oklch(74.41% 0.0913 283.63);
+  --color-accent-hover: oklch(78.53% 0.0913 283.63 / 71.25%);
   accent-color: var(--color-accent);
 }
 
@@ -41,17 +41,29 @@ button {
   font: inherit;
 }
 
+form {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1em;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
 form label {
-  display: block;
-  margin-block: 0.5em;
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-column: 1 / -1;
 }
 
 form input,
 form textarea,
 form button {
-  display: block;
+  grid-column: 2;
   width: 100%;
   box-sizing: border-box;
-  margin-block: 0.5em;
-  padding: 0.5em;
+}
+
+form button {
+  grid-column: 1 / -1;
+  justify-self: center;
 }
