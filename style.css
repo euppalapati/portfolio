@@ -1,5 +1,6 @@
 html {
   --color-accent: oklch(53.53% 0.1184 283.63);
+  --color-accent-hover: oklch(74.41% 0.0913 283.63);
   accent-color: var(--color-accent);
 }
 
@@ -31,5 +32,5 @@ nav a.current {
 
 nav a:hover {
   border-bottom: 0.4em solid var(--color-accent);
-  background-color: oklch(from var(--color-accent) 95% 5% h);
+  background-color: var(--color-accent-hover);
 }
