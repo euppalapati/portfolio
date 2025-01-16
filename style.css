@@ -26,4 +26,5 @@ nav a {
 nav a.current {
   border-bottom-width: 0.4em;
   padding-bottom: 0.1em;
+  font-weight: bold;
 }
