@@ -52,6 +52,7 @@ form label {
   display: grid;
   grid-template-columns: subgrid;
   grid-column: 1 / -1;
+  align-self: center;
 }
 
 form input,
@@ -70,7 +71,7 @@ form button {
 .projects {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(15em, 1fr));
-  gap: 1em;
+  gap: 1em 2em;
   padding: 1em;
   margin: 0 auto;
 }
@@ -84,4 +85,34 @@ article {
 
 article h2 {
   margin: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  line-height: 1.1;
+  text-wrap: balance;
+  margin: 0;
+}
+
+h1 {
+  font-size: 4em;
+}
+
+h2 {
+  font-size: 2.5em;
+}
+
+h3 {
+  font-size: 2em;
+}
+
+h4 {
+  font-size: 1.5em;
+}
+
+h5 {
+  font-size: 1.25em;
+}
+
+h6 {
+  font-size: 1em;
 }
