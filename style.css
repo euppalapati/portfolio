@@ -45,6 +45,7 @@ form {
   display: grid;
   grid-template-columns: auto 1fr;
   gap: 1em;
+  align-items: center;
 }
 
 form label {
@@ -69,4 +70,7 @@ form button {
 .projects {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(15em, 1fr));
+  gap: 1em;
+  padding: 1em;
+  margin: 0 auto;
 }
