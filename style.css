@@ -74,3 +74,14 @@ form button {
   padding: 1em;
   margin: 0 auto;
 }
+
+article {
+  display: grid;
+  grid-template-rows: subgrid;
+  grid-row: span 3;
+  gap: 1em;
+}
+
+article h2 {
+  margin: 0;
+}
