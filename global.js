@@ -44,3 +44,28 @@ for (let p of pages) {
   
     nav.append(a);
   }
+
+document.body.insertAdjacentHTML(
+    'afterbegin',
+    `
+    <div class="color-scheme-switch">
+      <label for="color-scheme" class="color-scheme-label">
+        Theme:
+      </label>
+      <select id="color-scheme" class="color-scheme-select">
+        <option value="light dark">Automatic</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+      </select>
+    </div>
+    `
+  );
+  
+const colorSchemeSelect = document.getElementById('color-scheme');
+  
+colorSchemeSelect.addEventListener('change', (event) => {
+  const value = event.target.value;
+  const root = document.documentElement;
+  
+  root.style.colorScheme = value;
+  });
