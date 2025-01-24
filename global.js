@@ -1,4 +1,4 @@
-console.log('hello!');
+console.log('step 3');
 
 function $$(selector, context = document) {
   return Array.from(context.querySelectorAll(selector));
@@ -20,22 +20,27 @@ let pages = [
     { url: 'https://github.com/euppalapati', title: 'GitHub' },
   ];
 
+const ARE_WE_HOME = document.documentElement.classList.contains('home');
+
 let nav = document.createElement('nav');
 document.body.prepend(nav);
 
-const ARE_WE_HOME = document.documentElement.classList.contains('home');
-
 for (let p of pages) {
-    let url = !ARE_WE_HOME && !url.startsWith('http') ? '../' + url : url;
+    let url = p.url;
     let title = p.title;
-    
+  
+    url = !ARE_WE_HOME && !url.startsWith('http') ? '../' + url : url;
+  
     let a = document.createElement('a');
     a.href = url;
     a.textContent = title;
-
-    if (a.host === location.host && a.pathname === location.pathname) {
-        a.classList.add('current');
-      }
-      
+  
+    a.classList.toggle(
+      'current',
+      a.host === location.host && a.pathname === location.pathname
+    );
+  
+    a.target = a.host !== location.host ? '_blank' : '';
+  
     nav.append(a);
   }
