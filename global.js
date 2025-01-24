@@ -1,4 +1,4 @@
-console.log('IT’S ALIVE!');
+console.log('hello!');
 
 function $$(selector, context = document) {
   return Array.from(context.querySelectorAll(selector));
