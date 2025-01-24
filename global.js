@@ -61,11 +61,17 @@ document.body.insertAdjacentHTML(
     `
   );
   
-const colorSchemeSelect = document.getElementById('color-scheme');
+// const colorSchemeSelect = document.getElementById('color-scheme');
   
-colorSchemeSelect.addEventListener('change', (event) => {
-  const value = event.target.value;
-  const root = document.documentElement;
+// colorSchemeSelect.addEventListener('change', (event) => {
+//   const value = event.target.value;
+//   const root = document.documentElement;
   
-  root.style.colorScheme = value;
+//   root.style.colorScheme = value;
+//   });
+
+select.addEventListener('input', function (event) {
+    console.log('color scheme changed to', event.target.value);
   });
+
+  document.documentElement.style.setProperty('color-scheme', event.target.value);
