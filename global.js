@@ -48,11 +48,11 @@ for (let p of pages) {
 document.body.insertAdjacentHTML(
     'afterbegin',
     `
-    <div class="color-scheme-switch">
-      <label for="color-scheme" class="color-scheme-label">
+    <div class="color-scheme">
+      <label for="color-scheme" class="color-scheme">
         Theme:
       </label>
-      <select id="color-scheme" class="color-scheme-select">
+      <select id="color-scheme" class="color-scheme">
         <option value="light dark">Automatic</option>
         <option value="light">Light</option>
         <option value="dark">Dark</option>
@@ -72,6 +72,7 @@ document.body.insertAdjacentHTML(
 
 select.addEventListener('input', function (event) {
     console.log('color scheme changed to', event.target.value);
+    localStorage.colorScheme = event.target.value
   });
 
   document.documentElement.style.setProperty('color-scheme', event.target.value);
