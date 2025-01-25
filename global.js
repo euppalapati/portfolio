@@ -61,13 +61,6 @@ document.body.insertAdjacentHTML(
     `
   );
 
-// const select = document.querySelector('.color-scheme');
-
-// select.addEventListener('input', function (event) {
-//   console.log('Color scheme changed to:', event.target.value);
-//   document.documentElement.style.setProperty('color-scheme', event.target.value);
-// });
-
 document.addEventListener('DOMContentLoaded', () => {
   const select = document.querySelector('.color-scheme');
 

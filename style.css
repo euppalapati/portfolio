@@ -22,12 +22,6 @@ nav {
     background-color: var(--background-color, canvas);
     color: var(--text-color, canvastext);
   }
-  
-@media (prefers-color-scheme: dark) {
-  nav {
-      --border-color: oklch(60% 8% 200 / 40%);
-    }
-  }
 
 nav a {
     flex: 1;
@@ -42,6 +36,16 @@ nav a.current {
   padding-bottom: 0.1em;
   font-weight: bold;
 }
+
+@media (prefers-color-scheme: dark) {
+  nav {
+      --border-color: oklch(60% 8% 200 / 40%);
+    }
+
+  nav a.current {
+    border-bottom: 0.4em solid oklch(60% 8% 200 / 40%);
+  }
+  }
 
 nav a:hover {
   border-bottom: 0.4em solid var(--color-accent);
