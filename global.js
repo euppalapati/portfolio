@@ -70,9 +70,26 @@ document.body.insertAdjacentHTML(
 //   root.style.colorScheme = value;
 //   });
 
-select.addEventListener('input', function (event) {
-    console.log('color scheme changed to', event.target.value);
-    localStorage.colorScheme = event.target.value
-  });
+const select = document.querySelector('.color-scheme');
 
+select.addEventListener('input', function (event) {
+  console.log('Color scheme changed to:', event.target.value);
   document.documentElement.style.setProperty('color-scheme', event.target.value);
+});
+
+form?.addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    const data = new FormData(form);
+    let url = form.action + "?";
+
+    // Iterate over the form data
+    for (let [name, value] of data) {
+      url += `${encodeURIComponent(name)}=${encodeURIComponent(value)}&`;
+    }
+
+    url = url.slice(0, -1);
+    console.log("Encoded URL:", url);
+
+    location.href = url;
+  });
