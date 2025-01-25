@@ -1,4 +1,4 @@
-console.log('step 3');
+console.log('is the page updated?');
 
 function $$(selector, context = document) {
   return Array.from(context.querySelectorAll(selector));
