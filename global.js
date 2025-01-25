@@ -60,36 +60,64 @@ document.body.insertAdjacentHTML(
     </div>
     `
   );
-  
-// const colorSchemeSelect = document.getElementById('color-scheme');
-  
-// colorSchemeSelect.addEventListener('change', (event) => {
-//   const value = event.target.value;
-//   const root = document.documentElement;
-  
-//   root.style.colorScheme = value;
-//   });
 
-const select = document.querySelector('.color-scheme');
+// const select = document.querySelector('.color-scheme');
 
-select.addEventListener('input', function (event) {
-  console.log('Color scheme changed to:', event.target.value);
-  document.documentElement.style.setProperty('color-scheme', event.target.value);
+// select.addEventListener('input', function (event) {
+//   console.log('Color scheme changed to:', event.target.value);
+//   document.documentElement.style.setProperty('color-scheme', event.target.value);
+// });
+
+document.addEventListener('DOMContentLoaded', () => {
+  const select = document.querySelector('.color-scheme');
+
+  if ("colorScheme" in localStorage) {
+    const savedScheme = localStorage.colorScheme;
+    document.documentElement.style.setProperty('color-scheme', savedScheme);
+    select.value = savedScheme;
+  }
+
+  select.addEventListener('input', function (event) {
+    const selectedScheme = event.target.value;
+    console.log('Color scheme changed to:', selectedScheme);
+
+    localStorage.colorScheme = selectedScheme;
+
+    document.documentElement.style.setProperty('color-scheme', selectedScheme);
+  });
 });
 
+// form?.addEventListener('submit', (event) => {
+//     event.preventDefault();
+
+//     const data = new FormData(form);
+//     let url = form.action + "?";
+
+//     for (let [name, value] of data) {
+//       url += `${encodeURIComponent(name)}=${encodeURIComponent(value)}&`;
+//     }
+
+//     url = url.slice(0, -1);
+//     console.log("Encoded URL:", url);
+
+//     location.href = url;
+//   });
+
+//   const form = document.querySelector('form');
+
 form?.addEventListener('submit', (event) => {
-    event.preventDefault();
+  event.preventDefault();
 
-    const data = new FormData(form);
-    let url = form.action + "?";
+  const data = new FormData(form);
+  let url = form.action + "?";
 
-    // Iterate over the form data
-    for (let [name, value] of data) {
-      url += `${encodeURIComponent(name)}=${encodeURIComponent(value)}&`;
-    }
+  for (let [name, value] of data) {
+    url += `${encodeURIComponent(name)}=${encodeURIComponent(value)}&`;
+  }
 
-    url = url.slice(0, -1);
-    console.log("Encoded URL:", url);
+  url = url.slice(0, -1);
 
-    location.href = url;
-  });
+  console.log("Encoded URL:", url);
+
+  location.href = url;
+});
