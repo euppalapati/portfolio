@@ -1,4 +1,4 @@
-console.log('step 4');
+console.log('more fixes');
 
 function $$(selector, context = document) {
   return Array.from(context.querySelectorAll(selector));
