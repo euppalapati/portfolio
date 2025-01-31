@@ -100,6 +100,10 @@ article {
   gap: 1em;
 }
 
+article .year {
+  font-style: italic;
+}
+
 article h2 {
   margin: 0;
 }
@@ -147,4 +151,40 @@ h1, h2, h3, h4, h5, h6 {
   right: 1rem;
   font-size: 80%;
   font-family: inherit;
+}
+
+#profile-stats {
+  width: 300px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #fff;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+
+#profile-stats h3 {
+  text-align: center;
+  font-size: 18px;
+  margin-bottom: 15px;
+}
+
+#profile-stats dl {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 equal-sized columns */
+  grid-gap: 10px;
+  padding: 0;
+  margin: 0;
+}
+
+#profile-stats dt {
+  grid-row: 1;
+  font-weight: bold;
+  color: #333;
+}
+
+#profile-stats dd {
+  grid-row: 2;
+  margin: 0;
+  color: #555;
 }
