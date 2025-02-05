@@ -194,3 +194,50 @@ img {
   height: 200px;
   object-fit: cover;
 }
+
+#projects-pie-plot {
+  max-width: 15em;
+  margin-block: 2em;
+
+  overflow: visible;
+}
+
+.legend {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(9em, 1fr));
+  gap: 10px;
+  flex: 1;
+  list-style: none;
+  padding: 8px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+}
+
+.legend-item {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.swatch {
+  width: 12px;
+  height: 12px;
+  background-color: var(--color);
+  border-radius: 30%;
+  display: inline-block;
+}
+
+.legend-item em {
+  font-size: 0.9em;
+  color: #666;
+}
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+}
