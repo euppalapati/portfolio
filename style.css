@@ -241,3 +241,32 @@ img {
   max-width: 900px;
   margin: 0 auto;
 }
+
+.searchBar {
+  width: 100%;
+  max-width: 1000px;
+  padding: 10px 15px;
+  font-size: 16px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  outline: none;
+}
+
+&:has(path:hover) {
+  path:not(:hover) {
+    opacity: 0.5;
+  }
+}
+
+path {
+  transition: 300ms;
+  cursor: pointer;
+}
+
+.selected {
+  --color: oklch(53.53% 0.1184 283.63) !important;
+
+  &:is(path) {
+    fill: var(--color);
+  }
+}

@@ -19,6 +19,8 @@ async function loadProjects() {
 
     return projects;
 }
+let selectedIndex = -1;
+let selectedYear = null;
 
 function renderPieChart(projectsGiven) {
     let svg = d3.select('svg');
@@ -41,12 +43,27 @@ function renderPieChart(projectsGiven) {
     let sliceGenerator = d3.pie().value((d) => d.value);
     let arcData = sliceGenerator(data);
     let arcs = arcData.map((d) => arcGenerator(d));
-    let colors = d3.scaleOrdinal(d3.schemeTableau10);
+    let colors = d3.scaleOrdinal(["#fe8e84", "#ffe387", "#ace1af", "#80aed7"]);
 
     arcs.forEach((arc, idx) => {
         svg.append('path')
             .attr('d', arc)
-            .attr('fill', colors(idx));
+            .attr('fill', colors(idx))
+            .attr('class', 'pie-slice')
+            .on('click', () => {
+                selectedIndex = selectedIndex === idx ? -1 : idx;
+                selectedYear = selectedIndex === -1 ? null : data[idx].label;
+
+                svg
+                    .selectAll('path')
+                    .attr('class', (_, i) => (i === selectedIndex ? 'selected' : ''));
+
+                legend
+                    .selectAll('li')
+                    .attr('class', (_, i) => (i === selectedIndex ? 'selected' : ''));
+
+                filterProjects();
+            });
     });
 
     data.forEach((d, idx) => {
@@ -55,6 +72,22 @@ function renderPieChart(projectsGiven) {
             .attr('class', 'legend-item')
             .html(`<span class="swatch"></span> ${d.label} <em>(${d.value})</em>`);
     });
+}
+
+function filterProjects() {
+  const projectsContainer = document.querySelector('.projects');
+  
+  let filteredProjects = projects;
+  filteredProjects = filteredProjects.filter((project) => {
+
+    let matchesYear = selectedIndex === -1 || project.year === selectedYear;    
+    let matchesQuery = query === '' || Object.values(project).join('\n').toLowerCase().includes(query.toLowerCase());
+
+    return matchesQuery && matchesYear;
+  });
+
+  projectsContainer.innerHTML = '';
+  renderProjects(filteredProjects, projectsContainer, 'h2');
 }
 
 let projects = await loadProjects();
@@ -76,5 +109,4 @@ searchInput.addEventListener('input', (event) => {
     projectsContainer.innerHTML = '';
     
     renderProjects(filteredProjects, projectsContainer, 'h2');
-    renderPieChart(filteredProjects);
 });
