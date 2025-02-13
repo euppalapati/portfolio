@@ -255,6 +255,7 @@ function brushed(event) {
   brushSelection = event.selection;
   updateSelection();
   updateSelectionCount();
+  updateLanguageBreakdown();
 }
 
 function isCommitSelected(commit) {
@@ -262,24 +263,20 @@ function isCommitSelected(commit) {
     return false;
   }
 
-  // Get the bounds of the brush selection
   const min = {
-    x: brushSelection[0][0], // min x (left)
-    y: brushSelection[0][1], // min y (top)
+    x: brushSelection[0][0],
+    y: brushSelection[0][1],
   };
   const max = {
-    x: brushSelection[1][0], // max x (right)
-    y: brushSelection[1][1], // max y (bottom)
+    x: brushSelection[1][0],
+    y: brushSelection[1][1],
   };
 
-  // Get the commit's x and y coordinates in the chart
-  const x = xScale(commit.datetime); // Use commit's datetime for x position
-  const y = yScale(commit.hourFrac); // Use commit's hourFrac for y position
-
-  // Check if the commit is within the brush selection's bounds
+  const x = xScale(commit.datetime);
+  const y = yScale(commit.hourFrac);
   return (
-    x >= min.x && x <= max.x && // Commit's x is between min and max x
-    y >= min.y && y <= max.y    // Commit's y is between min and max y
+    x >= min.x && x <= max.x && 
+    y >= min.y && y <= max.y
   );
 }
 
@@ -300,6 +297,91 @@ function updateSelectionCount() {
 
   return selectedCommits;
 }
+
+// function updateLanguageBreakdown() {
+//   const selectedCommits = brushSelection
+//     ? commits.filter(isCommitSelected)
+//     : [];
+//   const container = document.getElementById('language-breakdown');
+
+//   if (selectedCommits.length === 0) {
+//     container.innerHTML = '';
+//     return;
+//   }
+//   const requiredCommits = selectedCommits.length ? selectedCommits : commits;
+//   const lines = requiredCommits.flatMap((d) => d.lines);
+
+//   // Use d3.rollup to count lines per language
+//   const breakdown = d3.rollup(
+//     lines,
+//     (v) => v.length,
+//     (d) => d.type
+//   );
+
+//   // Update DOM with breakdown
+//   container.innerHTML = '';
+
+//   for (const [language, count] of breakdown) {
+//     const proportion = count / lines.length;
+//     const formatted = d3.format('.1~%')(proportion);
+
+//     container.innerHTML += `
+//             <dt>${language.toUpperCase()}</dt>
+//             <dd>${count} lines</dd>
+//             <dd> (${formatted})</dd>
+//         `;
+//   }
+
+//   return breakdown;
+// }
+
+function updateLanguageBreakdown() {
+  const selectedCommits = brushSelection
+    ? commits.filter(isCommitSelected)
+    : [];
+  const container = document.getElementById('language-breakdown');
+
+  if (selectedCommits.length === 0) {
+    container.innerHTML = '';
+    return;
+  }
+  const requiredCommits = selectedCommits.length ? selectedCommits : commits;
+  const lines = requiredCommits.flatMap((d) => d.lines);
+
+  // Use d3.rollup to count lines per language
+  const breakdown = d3.rollup(
+    lines,
+    (v) => v.length,
+    (d) => d.type
+  );
+
+  // Update DOM with breakdown
+  container.innerHTML = '';
+
+  // Create individual rows for language name, count, and percentage
+  let languageNames = '';
+  let languageCounts = '';
+  let languagePercents = '';
+
+  for (const [language, count] of breakdown) {
+    const proportion = count / lines.length;
+    const formatted = d3.format('.1~%')(proportion);
+
+    languageNames += `<div>${language.toUpperCase()}</div>`;
+    languageCounts += `<div>${count} lines</div>`;
+    languagePercents += `<div>(${formatted})</div>`;
+  }
+
+  // Add rows with proper structure
+  container.innerHTML += `
+    <div class="language-row">${languageNames}</div>
+    <div class="language-row">${languageCounts}</div>
+    <div class="language-row">${languagePercents}</div>
+  `;
+
+  return breakdown;
+}
+
 
   function brushSelector() {
     const svg = document.querySelector('svg');
