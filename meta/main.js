@@ -1,5 +1,6 @@
 let data = [];
 let commits = [];
+let xScale, yScale;
 
 async function loadData() {
     data = await d3.csv('loc.csv', (row) => ({
@@ -132,13 +133,13 @@ function processCommits() {
     .attr('viewBox', `0 0 ${width} ${height}`)
     .style('overflow', 'visible');
 
-  const xScale = d3
+  xScale = d3
     .scaleTime()
     .domain(d3.extent(commits, (d) => d.datetime))
     .range([0, width])
     .nice();
 
-  const yScale = d3.scaleLinear().domain([0, 24]).range([height, 0]);
+  yScale = d3.scaleLinear().domain([0, 24]).range([height, 0]);
 
     const margin = { top: 10, right: 10, bottom: 30, left: 20 };
 
@@ -216,6 +217,8 @@ svg
   .append('g')
   .attr('transform', `translate(${usableArea.left}, 0)`)
   .call(yAxis);
+
+  brushSelector();
   }
 
   function updateTooltipContent(commit) {
@@ -238,6 +241,61 @@ svg
   function updateTooltipVisibility(isVisible) {
     const tooltip = document.getElementById('commit-tooltip');
     tooltip.hidden = !isVisible;
+  }
+
+  function updateTooltipPosition(event) {
+    const tooltip = document.getElementById('commit-tooltip');
+    tooltip.style.left = `${event.clientX}px`;
+    tooltip.style.top = `${event.clientY}px`;
+  }
+
+  let brushSelection = null;
+
+function brushed(event) {
+  brushSelection = event.selection;
+  updateSelection();
+}
+
+function isCommitSelected(commit) {
+  if (!brushSelection) {
+    return false;
+  }
+
+  // Get the bounds of the brush selection
+  const min = {
+    x: brushSelection[0][0], // min x (left)
+    y: brushSelection[0][1], // min y (top)
+  };
+  const max = {
+    x: brushSelection[1][0], // max x (right)
+    y: brushSelection[1][1], // max y (bottom)
+  };
+
+  // Get the commit's x and y coordinates in the chart
+  const x = xScale(commit.datetime); // Use commit's datetime for x position
+  const y = yScale(commit.hourFrac); // Use commit's hourFrac for y position
+
+  // Check if the commit is within the brush selection's bounds
+  return (
+    x >= min.x && x <= max.x && // Commit's x is between min and max x
+    y >= min.y && y <= max.y    // Commit's y is between min and max y
+  );
+}
+
+function updateSelection() {
+  // Update visual state of dots based on selection
+  d3.selectAll('circle').classed('selected', (d) => isCommitSelected(d));
+}
+
+  function brushSelector() {
+    const svg = document.querySelector('svg');
+    // Create brush
+  d3.select(svg).call(d3.brush());
+
+  // Raise dots and everything after overlay
+  d3.select(svg).selectAll('.dots, .overlay ~ *').raise();
+
+  d3.select(svg).call(d3.brush().on('start brush end', brushed));
   }
 
   document.addEventListener('DOMContentLoaded', async () => {

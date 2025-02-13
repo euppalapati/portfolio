@@ -358,3 +358,21 @@ circle:hover {
   transform: scale(1.5);
   fill: oklch(53.53% 0.1184 283.63);
 }
+
+@keyframes marching-ants {
+  to {
+    stroke-dashoffset: -8; /* 5 + 3 */
+  }
+}
+
+.selection {
+  fill-opacity: 0.1;
+  stroke: black;
+  stroke-opacity: 0.7;
+  stroke-dasharray: 5 3;
+  animation: marching-ants 2s linear infinite;
+}
+
+circle.selected {
+  fill: #ace1af;
+}
