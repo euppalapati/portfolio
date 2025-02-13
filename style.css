@@ -308,3 +308,12 @@ path {
   margin: 0;
   color: #555;
 }
+
+.custom-dot {
+  fill: oklch(53.53% 0.1184 283.63); /* Custom color */
+}
+
+.gridlines line {
+  stroke: rgb(153, 153, 153);
+  stroke-opacity: 0.5;
+}
