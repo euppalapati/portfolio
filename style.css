@@ -154,13 +154,14 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 #profile-stats {
-  width: 300px;
+  width: 500px;
   border: 1px solid #ddd;
   border-radius: 8px;
   background-color: #fff;
   padding: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   cursor: pointer;
+  text-align: center;
 }
 
 #profile-stats h3 {
@@ -269,4 +270,41 @@ path {
   &:is(path) {
     fill: var(--color);
   }
+}
+
+#stats {
+  width: max;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #fff;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  text-align: center;
+}
+
+#stats h3 {
+  text-align: center;
+  font-size: 18px;
+  margin-bottom: 15px;
+}
+
+#stats dl {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); /* 4 equal-sized columns */
+  grid-gap: 10px;
+  padding: 0;
+  margin: 0;
+}
+
+#stats dt {
+  grid-row: 1;
+  font-weight: bold;
+  color: #333;
+}
+
+#stats dd {
+  grid-row: 2;
+  margin: 0;
+  color: #555;
 }
