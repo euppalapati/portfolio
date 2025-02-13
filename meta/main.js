@@ -254,6 +254,7 @@ svg
 function brushed(event) {
   brushSelection = event.selection;
   updateSelection();
+  updateSelectionCount();
 }
 
 function isCommitSelected(commit) {
@@ -285,6 +286,19 @@ function isCommitSelected(commit) {
 function updateSelection() {
   // Update visual state of dots based on selection
   d3.selectAll('circle').classed('selected', (d) => isCommitSelected(d));
+}
+
+function updateSelectionCount() {
+  const selectedCommits = brushSelection
+    ? commits.filter(isCommitSelected)
+    : [];
+
+  const countElement = document.getElementById('selection-count');
+  countElement.textContent = `${
+    selectedCommits.length || 'No'
+  } commits selected`;
+
+  return selectedCommits;
 }
 
   function brushSelector() {
