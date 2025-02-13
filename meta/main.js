@@ -166,15 +166,26 @@ gridlines.call(d3.axisLeft(yScale).tickFormat('').tickSize(-usableArea.width));
 
 const dots = svg.append('g').attr('class', 'dots');
 
+const [minLines, maxLines] = d3.extent(commits, (d) => d.totalLines);
+
+const rScale = d3
+  .scaleSqrt() // Change only this line
+  .domain([minLines, maxLines])
+  .range([2, 30]);
+
+  const sortedCommits = d3.sort(commits, (d) => -d.totalLines);
+
 dots
   .selectAll('circle')
-  .data(commits)
+  .data(sortedCommits)
   .join('circle')
   .attr('cx', (d) => xScale(d.datetime))
   .attr('cy', (d) => yScale(d.hourFrac))
-  .attr('r', 5)
+  .attr('r', (d) => rScale(d.totalLines))
   .attr('class', 'custom-dot')
+  .style('fill-opacity', 0.6) // Add transparency for overlapping dots
   .on('mouseenter', (event, commit) => {
+    d3.select(event.currentTarget).style('fill-opacity', 1);
     updateTooltipContent(commit);
     updateTooltipVisibility(true);
     updateTooltipPosition(event);
@@ -182,7 +193,8 @@ dots
   .on('mousemove', (event) => {
     updateTooltipPosition(event);
   })
-  .on('mouseleave', () => {
+  .on('mouseleave', function (event) {
+    d3.select(event.currentTarget).style('fill-opacity', 0.6);
     updateTooltipContent({});
     updateTooltipVisibility(false);
   });
