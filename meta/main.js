@@ -173,7 +173,19 @@ dots
   .attr('cx', (d) => xScale(d.datetime))
   .attr('cy', (d) => yScale(d.hourFrac))
   .attr('r', 5)
-  .attr('class', 'custom-dot');
+  .attr('class', 'custom-dot')
+  .on('mouseenter', (event, commit) => {
+    updateTooltipContent(commit);
+    updateTooltipVisibility(true);
+    updateTooltipPosition(event);
+  })
+  .on('mousemove', (event) => {
+    updateTooltipPosition(event);
+  })
+  .on('mouseleave', () => {
+    updateTooltipContent({});
+    updateTooltipVisibility(false);
+  });
 
     // Create the axes
 const xAxis = d3.axisBottom(xScale);
@@ -194,7 +206,30 @@ svg
   .call(yAxis);
   }
 
+  function updateTooltipContent(commit) {
+    const link = document.getElementById('commit-link');
+    const date = document.getElementById('commit-date');
+    const time = document.getElementById('commit-time');
+    const author = document.getElementById('commit-author');
+    const linesEdited = document.getElementById('commit-lines-edited');
+  
+    if (Object.keys(commit).length === 0) return;
+  
+    link.href = commit.url;
+    link.textContent = commit.id;
+    date.textContent = commit.datetime?.toLocaleString('en', { dateStyle: 'full' });
+    time.textContent = commit.datetime?.toLocaleString('en', { timeStyle: 'short' });
+    author.textContent = commit.author;
+    linesEdited.textContent = commit.totalLines || 'N/A';
+  }
+
+  function updateTooltipVisibility(isVisible) {
+    const tooltip = document.getElementById('commit-tooltip');
+    tooltip.hidden = !isVisible;
+  }
+
   document.addEventListener('DOMContentLoaded', async () => {
     await loadData();
+    console.log(commits);
     await createScatter();
   });

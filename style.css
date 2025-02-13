@@ -310,10 +310,51 @@ path {
 }
 
 .custom-dot {
-  fill: oklch(53.53% 0.1184 283.63); /* Custom color */
+  fill: oklch(78.53% 0.0913 283.63);
 }
 
 .gridlines line {
   stroke: rgb(153, 153, 153);
   stroke-opacity: 0.5;
+}
+
+dl.info {
+  display: grid;
+  width: 400px;
+  grid-template-columns: 1fr 2fr;
+  grid-gap: 8px;
+  margin: 0;
+  padding: 10px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.tooltip {
+  position: fixed;
+  top: 1em;
+  left: 1em;
+}
+
+dl.info dt {
+  color:rgb(153, 153, 153);
+  font-weight: bold;
+}
+
+dl.info[hidden] {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 500ms, visibility 500ms;
+}
+
+circle {
+  transition: 200ms;
+  transform-origin: center;
+  transform-box: fill-box;
+}
+
+circle:hover {
+  transform: scale(1.5);
+  fill: oklch(53.53% 0.1184 283.63);
 }
