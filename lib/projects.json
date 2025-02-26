@@ -1,5 +1,12 @@
 [
     {
+        "title": "Take a Bike, Pal!",
+        "year": "2025",
+        "image": "../images/bike.png",
+        "description": "Tracking bicycle traffic in Boston throughout the day.",
+        "url": "https://euppalapati.github.io/bike-watching/"
+    },
+    {
         "title": "Neural Correlates of Adaptive Behavioral Strategy",
         "year": "2025",
         "image": "../images/choice.jpg",
@@ -15,13 +22,15 @@
         "title": "When You Give a Mouse a Cookie (Recipe)",
         "year": "2024",
         "image": "../images/cookies.jpg",
-        "description": "Exploratory and predictive analyses on recipes and ratings."
+        "description": "Exploratory and predictive analyses on recipes and ratings.",
+        "url": "https://euppalapati.github.io/recipes-and-ratings/"
     },
     {
         "title": "Insights from Twitter Data",
         "year": "2024",
         "image": "../images/words.jpg",
-        "description": "Analyzing public sentiment and COVID-19 vaccination trends."
+        "description": "Analyzing public sentiment and COVID-19 vaccination trends.",
+        "url": "https://github.com/COGS108/Group095-FA24/blob/master/FinalProject_Group095-FA24.ipynb"
     },
     {
         "title": "Drd Connectivity",
