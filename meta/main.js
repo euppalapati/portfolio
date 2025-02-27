@@ -273,11 +273,12 @@ svg
         updateLanguageBreakdown();
       }
 
-  function isCommitSelected(commit) {
-    return selectedCommits.includes(commit);
+function isCommitSelected(commit) {
+  return selectedCommits.includes(commit);
   }
 
 function updateSelection() {
+  // Update visual state of dots based on selection
   d3.selectAll('circle').classed('selected', (d) => isCommitSelected(d));
 }
 
@@ -294,6 +295,43 @@ function updateSelectionCount() {
   return selectedCommits;
 }
 
+// function updateLanguageBreakdown() {
+//   const selectedCommits = brushSelection
+//     ? commits.filter(isCommitSelected)
+//     : [];
+//   const container = document.getElementById('language-breakdown');
+
+//   if (selectedCommits.length === 0) {
+//     container.innerHTML = '';
+//     return;
+//   }
+//   const requiredCommits = selectedCommits.length ? selectedCommits : commits;
+//   const lines = requiredCommits.flatMap((d) => d.lines);
+
+//   // Use d3.rollup to count lines per language
+//   const breakdown = d3.rollup(
+//     lines,
+//     (v) => v.length,
+//     (d) => d.type
+//   );
+
+//   // Update DOM with breakdown
+//   container.innerHTML = '';
+
+//   for (const [language, count] of breakdown) {
+//     const proportion = count / lines.length;
+//     const formatted = d3.format('.1~%')(proportion);
+
+//     container.innerHTML += `
+//             <dt>${language.toUpperCase()}</dt>
+//             <dd>${count} lines</dd>
+//             <dd> (${formatted})</dd>
+//         `;
+//   }
+
+//   return breakdown;
+// }
+
 function updateLanguageBreakdown() {
   const selectedCommits = brushSelection
     ? commits.filter(isCommitSelected)
@@ -307,14 +345,17 @@ function updateLanguageBreakdown() {
   const requiredCommits = selectedCommits.length ? selectedCommits : commits;
   const lines = requiredCommits.flatMap((d) => d.lines);
 
+  // Use d3.rollup to count lines per language
   const breakdown = d3.rollup(
     lines,
     (v) => v.length,
     (d) => d.type
   );
 
+  // Update DOM with breakdown
   container.innerHTML = '';
 
+  // Create individual rows for language name, count, and percentage
   let languageNames = '';
   let languageCounts = '';
   let languagePercents = '';
@@ -328,6 +369,7 @@ function updateLanguageBreakdown() {
     languagePercents += `<div>(${formatted})</div>`;
   }
 
+  // Add rows with proper structure
   container.innerHTML += `
     <div class="language-row">${languageNames}</div>
     <div class="language-row">${languageCounts}</div>
@@ -340,8 +382,10 @@ function updateLanguageBreakdown() {
 
   function brushSelector() {
     const svg = document.querySelector('svg');
+    // Create brush
   d3.select(svg).call(d3.brush());
 
+  // Raise dots and everything after overlay
   d3.select(svg).selectAll('.dots, .overlay ~ *').raise();
 
   d3.select(svg).call(d3.brush().on('start brush end', brushed));
